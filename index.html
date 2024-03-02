@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Основы Vue</title>
+    <link rel="stylesheet" href="theme.css"> 
+  </head>
+  <body>
+    <div class="container pt-5" id="app">
+      <div class="card">
+        <h1> {{ title }} </h1>
+        <div class="form-control">
+          <input 
+            type="text" 
+            :placeholder="placeholderString"
+            v-model="inputValue"
+            @keypress.enter="addNewNote"
+          >
+        </div>
+        <p :style="{
+          color: inputValue.length < 65 ? 'black': 'red',
+          fontSize: '10px'}">
+          {{ description }}
+        </p>
+        <button class="btn" @click="addNewNote">Добавить</button>
+        <hr />
+        <ul class="list" v-if="notes.length != 0">
+          <li class="list-item" v-for="(myNote, idx) in notes">
+            {{ idx + 1 }}. {{ myNote }}
+            <div class="btn-container">
+              <button class="btn danger" @click="deleteNote(idx)">удалить</button>
+              <button class="btn" @click="markDone(idx)">Выполнено</button>
+            </div>
+          </li>
+        </ul>
+        <div v-if="notes.length == 0"> Невыполненных заметок пока нет</div>
+        <hr />
+        <ul class="list" v-if="donenotes.length != 0">
+          <li class="strikethrough" v-for="(myNote, idx) in donenotes">
+            {{ idx + 1 }}. {{ myNote }}
+          </li>
+          <hr />
+        </ul>
+        <div>
+          <h3> Процент выполнения задач: {{ productivity }} </h3>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
